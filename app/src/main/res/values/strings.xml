@@ -40,6 +40,13 @@
     <string name="add_show__start">Start Date/Time</string>
     <string name="add_show__end">End Date/Time</string>
 
+    <string name="add_venue__name">Name</string>
+    <string name="add_venue__website">Website</string>
+    <string name="add_venue__picture_url">Picture URL</string>
+    <string name="add_venue__Address">Street Address</string>
+    <string name="add_venue__Town">Town</string>
+    <string name="add_venue__State">State</string>
+    <string name="add_venue__Zip">Zip Code</string>
 
     <string name="submit_button">Submit</string>
     <string name="clear_button">Clear</string>

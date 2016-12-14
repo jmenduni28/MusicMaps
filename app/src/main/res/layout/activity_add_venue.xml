@@ -18,7 +18,7 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:layout_marginTop="30dp"
-        android:id="@+id/showName"
+        android:id="@+id/venueName"
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
@@ -34,33 +34,13 @@
         android:id="@+id/textView2"
         android:textStyle="normal|bold" />
 
-    <TextView
-        android:text="@string/add_show__venue"
-        android:textSize="@dimen/field_label_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:textStyle="normal|bold"
-        android:layout_below="@+id/showName"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="@string/add_artist__website"
-        android:textSize="@dimen/field_label_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView9"
-        android:textStyle="normal|bold"
-        android:layout_below="@+id/showVenue"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/showWebsite"
+        android:id="@+id/venueWebsite"
         android:layout_below="@+id/textView9"
         android:layout_alignParentStart="true" />
 
@@ -71,7 +51,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView10"
         android:textStyle="normal|bold"
-        android:layout_below="@+id/showWebsite"
+        android:layout_below="@+id/venueWebsite"
         android:layout_alignParentStart="true" />
 
     <EditText
@@ -81,17 +61,17 @@
         android:ems="10"
         android:layout_below="@+id/textView10"
         android:layout_alignParentStart="true"
-        android:id="@+id/showPictureURL" />
+        android:id="@+id/venuePictureURL" />
 
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
         android:ems="10"
-            android:id="@+id/showArtists"
-            android:layout_below="@+id/textView11"
+        android:layout_below="@+id/textView11"
             android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:inputType="textLongMessage" />
+        android:inputType="textLongMessage"
+        android:id="@+id/venueStreetAddress" />
 
     <EditText
         android:layout_height="wrap_content"
@@ -103,7 +83,7 @@
         android:layout_width="150dp" />
 
     <TextView
-        android:text="@string/add_show_title"
+        android:text="@string/add_venue_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
@@ -113,13 +93,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <Spinner
-        android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
-        android:id="@+id/showVenue"
-        android:layout_width="200sp"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentStart="true" />
 
     <Button
         android:text="@string/submit_button"
@@ -131,45 +104,84 @@
         android:layout_alignTop="@+id/button3" />
 
     <TextView
-        android:text="@string/add_show__artists"
-        android:textSize="16.5sp"
+        android:text="@string/add_venue__Address"
+        android:textSize="@dimen/field_label_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView11"
         android:textStyle="normal|bold"
-        android:layout_below="@+id/showPictureURL"
+        android:layout_below="@+id/venuePictureURL"
         android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/endDateTime"
-        android:inputType="datetime"
-        android:layout_width="150dp"
-        android:layout_below="@+id/textView13"
-        android:layout_alignParentEnd="true" />
-
     <TextView
-        android:text="@string/add_show__start"
+        android:text="@string/add_artist__website"
         android:textSize="@dimen/field_label_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView14"
+        android:id="@+id/textView9"
         android:textStyle="normal|bold"
-        android:layout_below="@+id/showArtists"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="24dp" />
+        android:layout_below="@+id/venueName"
+        android:layout_alignParentStart="true" />
 
     <TextView
-            android:text="@string/add_show__start"
-            android:textSize="@dimen/field_label_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView13"
-            android:textStyle="normal|bold"
-        android:layout_alignBaseline="@+id/textView14"
-        android:layout_alignBottom="@+id/textView14"
-        android:layout_alignEnd="@+id/textView11" />
+        android:text="@string/add_venue__Town"
+        android:textSize="@dimen/field_label_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView15"
+        android:textStyle="normal|bold"
+        android:layout_below="@id/venueStreetAddress"
+        android:layout_alignParentStart="true"
+   />
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textLongMessage"
+        android:id="@+id/venueTown"
+        android:layout_below="@+id/textView15"
+        android:layout_alignParentStart="true"
+        android:layout_width="225dp" />
+
+    <TextView
+        android:text="@string/add_artist__state"
+        android:textSize="@dimen/field_label_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView17"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/venueStreetAddress"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="26dp" />
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textLongMessage"
+        android:id="@+id/venueState"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/textView17"
+        android:layout_width="100dp"
+        android:layout_below="@+id/textView17" />
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/venueZipCode"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/textView18"
+        android:layout_alignParentStart="true"
+        android:inputType="number" />
+
+    <TextView
+        android:text="@string/add_artist__zip"
+        android:textSize="@dimen/field_label_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView18"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/venueTown"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="@string/clear_button"
@@ -187,7 +199,7 @@
         android:id="@+id/button3"
         android:onClick="goBack"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/textView10" />
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
