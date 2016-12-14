@@ -30,6 +30,12 @@ public class AddShowActivity extends AppCompatActivity {
         setVenues();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setVenues();
+    }
+
     public void setViewPointers() {
         showName = (EditText) findViewById(R.id.showName);
         venue = (Spinner) findViewById(R.id.showVenue);
@@ -41,7 +47,7 @@ public class AddShowActivity extends AppCompatActivity {
     }
 
     public void setVenues() {
-        List<String> list = database.getAllGenres();
+        List<String> list = database.getAllVenues();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

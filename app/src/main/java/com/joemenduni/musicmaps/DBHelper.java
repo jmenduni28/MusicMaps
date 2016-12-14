@@ -93,20 +93,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        //if (created == false) {
-            String genreTable = "CREATE TABLE " + GENRE_TABLE_NAME + "(" + makeGenreTableSQL() + ")";
-            String artistTable = "CREATE TABLE " + ARTIST_TABLE_NAME + "(" + makeArtistTableSQL() + ")";
-            String venueTable = "CREATE TABLE " + VENUE_TABLE_NAME + "(" + makeVenueTableSQL() + ")";
-            String showTable = "CREATE TABLE " + SHOW_TABLE_NAME + "(" + makeShowTableSQL() + ")";
-            String artistToshowTable = "CREATE TABLE " + ARTIST_SHOW_TABLE_NAME + "(" + makeArtistShowTableSQL() + ")";
-            database.execSQL(genreTable);
-            database.execSQL(artistTable);
-            database.execSQL(venueTable);
-            //database.execSQL(showTable);
-            //database.execSQL(artistToshowTable);
-            //database.execSQL("CREATE INDEX artist_index ON " + ARTIST_SHOW_TABLE_NAME + " (artist_id);");
-            //database.execSQL("CREATE INDEX show_index ON " + ARTIST_SHOW_TABLE_NAME + " (show_id);");
-        isCreating = true;
+        createTables();
         currentDB = database;
         makeInitialGenres();
         isCreating = false;
@@ -147,16 +134,20 @@ public class DBHelper extends SQLiteOpenHelper {
         String genreTable = "CREATE TABLE " + GENRE_TABLE_NAME + "(" + makeGenreTableSQL() + ")";
         String artistTable = "CREATE TABLE " + ARTIST_TABLE_NAME + "(" + makeArtistTableSQL() + ")";
         String venueTable = "CREATE TABLE " + VENUE_TABLE_NAME + "(" + makeVenueTableSQL() + ")";
-        String showTable = "CREATE TABLE " + SHOW_TABLE_NAME + "(" + makeShowTableSQL() + ")";
-        String artistToshowTable = "CREATE TABLE " + ARTIST_SHOW_TABLE_NAME + "(" + makeArtistShowTableSQL() + ")";
+        String showTable = "CREATE TABLE " + SHOW_TABLE_NAME + "(" + makeShowTableSQL() + ", FOREIGN KEY (" + SHOW_venue_id + ")" + "REFERENCES " + VENUE_TABLE_NAME + "(" + VENUE_id + ")" + ")";
+        String artistToshowTable = "CREATE TABLE " + ARTIST_SHOW_TABLE_NAME + "(" + makeArtistShowTableSQL() +
+                ", FOREIGN KEY (" + ARTISTSHOW_artist_id + ")" + "REFERENCES " + ARTIST_TABLE_NAME + "(" + ARTIST_id + ") ON DELETE CASCADE, " +
+                "FOREIGN KEY (" + ARTISTSHOW_show_id + ")" + "REFERENCES " + SHOW_TABLE_NAME + "(" + SHOW_id + ") ON DELETE CASCADE" + ")";
         currentDB.execSQL(genreTable);
         currentDB.execSQL(artistTable);
         currentDB.execSQL(venueTable);
-        //database.execSQL(showTable);
-        //database.execSQL(artistToshowTable);
-        //database.execSQL("CREATE INDEX artist_index ON " + ARTIST_SHOW_TABLE_NAME + " (artist_id);");
-        //database.execSQL("CREATE INDEX show_index ON " + ARTIST_SHOW_TABLE_NAME + " (show_id);");
+        currentDB.execSQL(showTable);
+        currentDB.execSQL(artistToshowTable);
+        currentDB.execSQL("CREATE INDEX artist_index ON " + ARTIST_SHOW_TABLE_NAME + " (artist_id);");
+        currentDB.execSQL("CREATE INDEX show_index ON " + ARTIST_SHOW_TABLE_NAME + " (show_id);");
         makeInitialGenres();
+        makeInitialVenues();
+        makeInitialShows();
     }
 
     private String makeGenreTableSQL() {
@@ -191,8 +182,8 @@ public class DBHelper extends SQLiteOpenHelper {
         venueDBMap.put(VENUE_town, "TEXT");
         venueDBMap.put(VENUE_state, "TEXT");
         venueDBMap.put(VENUE_zip_code, "INTEGER");
-        venueDBMap.put(VENUE_latitude, "INTEGER");
-        venueDBMap.put(VENUE_longitude, "INTEGER");
+        venueDBMap.put(VENUE_latitude, "REAL");
+        venueDBMap.put(VENUE_longitude, "REAL");
         return makeDBStringFromMap(venueDBMap);
     }
 
@@ -206,7 +197,6 @@ public class DBHelper extends SQLiteOpenHelper {
         showDBMap.put(SHOW_start_datetime, "INTEGER");
         showDBMap.put(SHOW_end_datetime, "INTEGER");
         showDBMap.put(SHOW_attendance, "INTEGER");
-        showDBMap.put("FOREIGN KEY (" + SHOW_venue_id + ")", "REFERENCES " + VENUE_TABLE_NAME + "(" + VENUE_id + ")");
         return makeDBStringFromMap(showDBMap);
     }
 
@@ -215,8 +205,6 @@ public class DBHelper extends SQLiteOpenHelper {
         artistshowDBMap.put(ARTISTSHOW_id, "INTEGER PRIMARY KEY");
         artistshowDBMap.put(ARTISTSHOW_artist_id, "INTEGER");
         artistshowDBMap.put(ARTISTSHOW_show_id, "INTEGER");
-        artistshowDBMap.put("FOREIGN KEY (" + ARTISTSHOW_artist_id + ")", "REFERENCES " + ARTIST_TABLE_NAME + "(" + ARTIST_id + ") ON DELETE CASCADE");
-        artistshowDBMap.put("FOREIGN KEY (" + ARTISTSHOW_show_id + ")", "REFERENCES " + SHOW_TABLE_NAME + "(" + SHOW_id + ") ON DELETE CASCADE");
         return makeDBStringFromMap(artistshowDBMap);
     }
 
@@ -237,7 +225,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private void makeInitialGenres() {
-        System.out.println("MAKE INITIAL");
         String[] genres = {"Rock 'n Roll", "Pop", "Heavy Metal", "Rap", "Country", "Punk", "R & B", "Jazz", "Classical", "Alternative", "Hip Hop", "Soul", "Reggae", "Techno", "Grunge", "EDM", "Hard Rock", "Blues"};
         for (String genre: genres) {
             genreCount ++;
@@ -245,6 +232,50 @@ public class DBHelper extends SQLiteOpenHelper {
             values.put(GENRE_ID, genreCount);
             values.put(GENRE_NAME, genre);
             this.getWritableDatabase().insert(GENRE_TABLE_NAME, null, values);
+        }
+    }
+
+    private void makeInitialVenues() {
+        String[] venues = {"Hangar Theatre,http://www.hangartheatre.org/,42.4553429,-76.51731889999999,",
+                            "The Haunt,http://www.thehaunt.com/,42.4514511,-76.5051489",
+                            "The Dock,http://thedockithaca.com/,42.4519932,-76.5133232",
+                            "Lot 10,http://www.lot-10.com/,42.4391302,-76.4992535",
+                            "State Theatre of Ithaca,http://www.stateofithaca.com/,42.4392627,-76.49960229999999",
+                             "Trumansburg Fairground,http://www.tburgevents.com/venue/trumansburg-fair-grounds/,42.5360253,-76.6466288",
+                             "Bernie Milton Pavilion,http://ithacafestival.org/,42.4393319,-76.49696639999999"};
+        for (String venue: venues) {
+            venueCount ++;
+            String[] lineSplit = venue.split(",");
+            ContentValues values = new ContentValues();
+            values.put(VENUE_id, venueCount);
+            values.put(VENUE_name,lineSplit[0]);
+            values.put(VENUE_website, lineSplit[1]);
+            values.put(VENUE_latitude, Double.valueOf(lineSplit[2]));
+            values.put(VENUE_longitude, Double.valueOf(lineSplit[3]));
+            this.getWritableDatabase().insert(VENUE_TABLE_NAME, null, values);
+        }
+    }
+
+    private void makeInitialShows() {
+        String[] venues = {"Grassroots 2016,http://www.grassrootsfest.org/festival/,5",
+                            "Grassroots 2015,http://www.grassrootsfest.org/festival/,5",
+                            "Ithaca Festival 2016,http://www.grassrootsfest.org/festival/,6",
+                            "Ithaca AppleFest 2016,http://www.downtownithaca.com/ithaca-events/Apple%20Harvest%20Festival%20Presented%20by%20Tompkins%20Trust,6",
+                            "John Brown's Body,http://dansmallspresents.com/john-browns-body,4",
+                            "The Blind Spots: Willy Wonka and The Chocolate Factory,http://dansmallspresents.com/the-blind-spots-willy-wonka-and-the-chocolate-factory,2",
+                            "Driftwood,http://dansmallspresents.com/driftwood,2",
+                            "Jimkata,http://dansmallspresents.com/jimkata,1",
+                            "Big Mean Sound Machine,http://dansmallspresents.com/big-mean-sound-machine,1",
+                            "Ben Harper & The Innocent Criminals,http://dansmallspresents.com/ben-harper-the-innocent-criminals,3"};
+        for (String venue: venues) {
+            showCount ++;
+            String[] lineSplit = venue.split(",");
+            ContentValues values = new ContentValues();
+            values.put(SHOW_id, venueCount);
+            values.put(SHOW_name,lineSplit[0]);
+            values.put(SHOW_website, lineSplit[1]);
+            values.put(SHOW_venue_id, Integer.valueOf(lineSplit[2]));
+            this.getWritableDatabase().insert(SHOW_TABLE_NAME, null, values);
         }
     }
 
@@ -272,6 +303,44 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return artistMap;
+    }
+
+    public List<String> getAllVenues() {
+        List<String> venueList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + VENUE_TABLE_NAME + ";";
+        Cursor cursor = this.getReadableDatabase().rawQuery(selectQuery, null);
+        if ((cursor.moveToFirst())) {
+            do {
+                venueList.add(cursor.getString(6));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return venueList;
+    }
+
+    public Map<Integer, String> getAllVenuesMap() {
+        Map<Integer, String> venueMap = new HashMap<Integer, String>();
+        String selectQuery = "SELECT * FROM " + VENUE_TABLE_NAME + ";";
+        Cursor cursor = this.getReadableDatabase().rawQuery(selectQuery, null);
+        if ((cursor.moveToFirst())) {
+            do {
+                venueMap.put(cursor.getInt(9), cursor.getString(6));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return venueMap;
+    }
+
+    public Cursor getAllVenuesCursors() {
+        String selectQuery = "SELECT * FROM " + VENUE_TABLE_NAME + ";";
+        Cursor cursor = this.getReadableDatabase().rawQuery(selectQuery, null);
+        return cursor;
+    }
+
+    public Cursor getAllShowsCursors() {
+        String selectQuery = "SELECT * FROM " + SHOW_TABLE_NAME + ";";
+        Cursor cursor = this.getReadableDatabase().rawQuery(selectQuery, null);
+        return cursor;
     }
 
 
@@ -315,6 +384,34 @@ public class DBHelper extends SQLiteOpenHelper {
             it.remove(); // avoids a ConcurrentModificationException
         }
         return -1;
+    }
+
+    public int findVenueByName(String venueName) {
+        Map<Integer, String> venueMap = getAllVenuesMap();
+        Iterator it = venueMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if (venueName.equals(pair.getValue())) {
+                return (int) pair.getKey();
+            }
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        return -1;
+    }
+
+    public double[] findVenueLatLngByName(String venueName) {
+        Map<Integer, String> venueMap = new HashMap<Integer, String>();
+        String selectQuery = "SELECT * FROM " + VENUE_TABLE_NAME + ";";
+        Cursor cursor = this.getReadableDatabase().rawQuery(selectQuery, null);
+        if ((cursor.moveToFirst())) {
+            do {
+                if (venueName.equals(cursor.getString(6))) {
+                    return new double[]{cursor.getDouble(5), cursor.getDouble(2)};
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return new double[] {-1, -1};
     }
 
     private void makeArtistsToShows(int show_id, String[] artists) {

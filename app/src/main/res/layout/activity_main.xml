@@ -103,6 +103,7 @@
         android:id="@+id/mapButton"
         android:textStyle="normal|bold"
         android:textSize="24sp"
+        android:onClick="gotoMap"
         android:layout_below="@+id/textView5"
         android:layout_alignEnd="@+id/footer_button_1" />
 

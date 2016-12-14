@@ -1,5 +1,6 @@
 package com.joemenduni.musicmaps;
 
+import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -7,12 +8,19 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Iterator;
+import java.util.Map;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+
+    DBHelper database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +30,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
 
+        database = new DBHelper(this);
+    }
 
     /**
      * Manipulates the map once available.
@@ -37,10 +46,43 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        Cursor cursor = database.getAllVenuesCursors();
+        LatLng latLng = null;
+        if ((cursor.moveToFirst())) {
+            do {
+                String name = cursor.getString(6);
+                Double latitude = cursor.getDouble(5);
+                Double longitude = cursor.getDouble(2);
+                latLng = new LatLng(latitude, longitude);
+                mMap.addMarker(new MarkerOptions().position(latLng).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        cursor = database.getAllShowsCursors();
+        latLng = null;
+        if ((cursor.moveToFirst())) {
+            do {
+                String name = cursor.getString(3);
+                System.out.println();
+                System.out.println(cursor.getString(0));
+                System.out.println(cursor.getString(1));
+                System.out.println(cursor.getString(2));
+                System.out.println(cursor.getString(3));
+                System.out.println(cursor.getString(4));
+                System.out.println(cursor.getString(5));
+                System.out.println(cursor.getString(6));
+                System.out.println();
+                double[] latlng = database.findVenueLatLngByName(name);
+                System.out.println(latlng[0]);
+                Double latitude = latlng[0];
+                Double longitude = latlng[1];
+                latLng = new LatLng(latitude, longitude);
+                mMap.addMarker(new MarkerOptions().position(latLng).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
+
+
 }

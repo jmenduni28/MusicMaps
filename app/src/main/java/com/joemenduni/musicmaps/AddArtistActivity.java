@@ -34,6 +34,12 @@ public class AddArtistActivity extends AppCompatActivity {
         setGenres();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setGenres();
+    }
+
     public void setViewPointers() {
         artistName = (EditText) findViewById(R.id.artistName);
         genre = (Spinner) findViewById(R.id.artistGenre);

@@ -55,6 +55,7 @@
         android:layout_alignEnd="@+id/button4"
         android:id="@+id/userName" />
 
+
     <RadioButton
         android:text="@string/Yes"
         android:layout_width="wrap_content"
@@ -73,6 +74,9 @@
         android:layout_below="@+id/textView16"
         android:layout_toEndOf="@+id/settings_musician_yes"
         android:layout_marginStart="9dp" />
+
+
+
 
     <RadioButton
         android:text="@string/Yes"
