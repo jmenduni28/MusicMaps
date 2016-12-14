@@ -19,6 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddArtistActivity" />
+        <activity android:name=".AddShowActivity" />
+        <activity android:name=".AddVenueActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".SettingsActivity"></activity>
     </application>
