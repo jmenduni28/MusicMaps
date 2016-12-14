@@ -12,8 +12,9 @@
 
 
     <string name="cant_find">Don\'t See A Show or A Venue?</string>
-    <string name="add_show_button">Add A Show</string>
-    <string name="add_venue_button">Add A Venue</string>
+    <string name="add_artist_button">Add Artist</string>
+    <string name="add_show_button">Add Show</string>
+    <string name="add_venue_button">Add Venue</string>
 
     <string name="settings_button">Settings</string>
     <string name="about_button">About</string>

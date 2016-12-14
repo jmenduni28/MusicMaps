@@ -2,18 +2,25 @@ package com.joemenduni.musicmaps;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by joemenduni on 12/13/16.
  */
 
-public class DBHelper extends SQLiteOpenHelper {
+public class DBHelper extends SQLiteOpenHelper implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     //TASK 1: DEFINE THE DATABASE AND TABLE
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "MusicMapsDB";
@@ -61,32 +68,59 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String ARTISTSHOW_artist_id = "artist_id";
     private static final String ARTISTSHOW_show_id = "show_id";
 
-    private int genreCount = 0;
-    private int artistCount = 0;
-    private int showCount = 0;
-    private int venueCount = 0;
-    private int artistShowCount = 0;
+    private static int genreCount = 0;
+    private static int artistCount = 0;
+    private static int showCount = 0;
+    private static int venueCount = 0;
+    private static int artistShowCount = 0;
+
+    private static boolean created = false;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    boolean isCreating = false;
+    SQLiteDatabase currentDB = null;
+
     @Override
     public void onCreate(SQLiteDatabase database) {
-        System.out.println("RUNNING DB");
-        String genreTable = "CREATE TABLE " + GENRE_TABLE_NAME + "(" + makeGenreTableSQL() + ")";
-        String artistTable = "CREATE TABLE " + ARTIST_TABLE_NAME + "(" + makeArtistTableSQL() + ")";
-        String venueTable = "CREATE TABLE " + VENUE_TABLE_NAME + "(" + makeVenueTableSQL() + ")";
-        String showTable = "CREATE TABLE " + SHOW_TABLE_NAME + "(" + makeShowTableSQL() + ")";
-        String artistToshowTable = "CREATE TABLE " + ARTIST_SHOW_TABLE_NAME + "(" + makeArtistShowTableSQL() + ")";
-        database.execSQL(genreTable);
-        database.execSQL(artistTable);
-        database.execSQL(venueTable);
-        database.execSQL(showTable);
-        database.execSQL(artistToshowTable);
-        database.execSQL("CREATE INDEX artist_index ON " + ARTIST_SHOW_TABLE_NAME + " (artist_id);");
-        database.execSQL("CREATE INDEX show_index ON " + ARTIST_SHOW_TABLE_NAME + " (show_id);");
-        makeInitialGenres();
+        if (created == false) {
+            String genreTable = "CREATE TABLE " + GENRE_TABLE_NAME + "(" + makeGenreTableSQL() + ")";
+            String artistTable = "CREATE TABLE " + ARTIST_TABLE_NAME + "(" + makeArtistTableSQL() + ")";
+            String venueTable = "CREATE TABLE " + VENUE_TABLE_NAME + "(" + makeVenueTableSQL() + ")";
+            String showTable = "CREATE TABLE " + SHOW_TABLE_NAME + "(" + makeShowTableSQL() + ")";
+            String artistToshowTable = "CREATE TABLE " + ARTIST_SHOW_TABLE_NAME + "(" + makeArtistShowTableSQL() + ")";
+            database.execSQL(genreTable);
+            database.execSQL(artistTable);
+            database.execSQL(venueTable);
+            //database.execSQL(showTable);
+            //database.execSQL(artistToshowTable);
+            //database.execSQL("CREATE INDEX artist_index ON " + ARTIST_SHOW_TABLE_NAME + " (artist_id);");
+            //database.execSQL("CREATE INDEX show_index ON " + ARTIST_SHOW_TABLE_NAME + " (show_id);");
+            makeInitialGenres();
+            created = true;
+            isCreating = true;
+
+        }
+            currentDB = database;
+        //isCreating = false;
+        //currentDB = null;
+    }
+
+    @Override
+    public SQLiteDatabase getWritableDatabase() {
+        // TODO Auto-generated method stub
+        if(isCreating && currentDB != null){
+            return currentDB;
+        }
+        return super.getWritableDatabase();
+    }
+
+    @Override
+    public SQLiteDatabase getReadableDatabase() {
+        // TODO Auto-generated method stub
+        return super.getReadableDatabase();
     }
 
     @Override
@@ -156,8 +190,8 @@ public class DBHelper extends SQLiteOpenHelper {
         artistshowDBMap.put(ARTISTSHOW_id, "INTEGER PRIMARY KEY");
         artistshowDBMap.put(ARTISTSHOW_artist_id, "INTEGER");
         artistshowDBMap.put(ARTISTSHOW_show_id, "INTEGER");
-        artistshowDBMap.put("FOREIGN KEY(" + ARTISTSHOW_artist_id + ")", "REFEREES " + ARTIST_TABLE_NAME + "(" + ARTIST_id + ") ON DELETE CASCADE");
-        artistshowDBMap.put("FOREIGN KEY(" + ARTISTSHOW_show_id + ")", "REFEREES " + SHOW_TABLE_NAME + "(" + SHOW_id + ") ON DELETE CASCADE");
+        artistshowDBMap.put("FOREIGN KEY (" + ARTISTSHOW_artist_id + ")", "REFERENCES " + ARTIST_TABLE_NAME + "(" + ARTIST_id + ") ON DELETE CASCADE");
+        artistshowDBMap.put("FOREIGN KEY (" + ARTISTSHOW_show_id + ")", "REFERENCES " + SHOW_TABLE_NAME + "(" + SHOW_id + ") ON DELETE CASCADE");
         return makeDBStringFromMap(artistshowDBMap);
     }
 
@@ -187,9 +221,30 @@ public class DBHelper extends SQLiteOpenHelper {
             values.put(GENRE_ID, genreCount);
             values.put(GENRE_NAME, genre);
             db.insert(GENRE_TABLE_NAME, null, values);
-
         }
         db.close();
+    }
+
+    public void addArtist(String theName, String theGenre, int theMembers, String theWebsite, String thePictureURL, String theTown, String theState, String theZipCode) {
+        ContentValues values = new ContentValues();
+        values.put(ARTIST_id, artistCount);
+    }
+
+    public List<String> getAllGenres() {
+        List<String> genreList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + GENRE_TABLE_NAME + ";";
+        Cursor cursor = currentDB.rawQuery(selectQuery, null);
+        if ((cursor.moveToFirst())) {
+            do {
+                genreList.add(cursor.getString(1));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return genreList;
+    }
+
+    public SQLiteDatabase getDB() {
+        return currentDB;
     }
 
 
