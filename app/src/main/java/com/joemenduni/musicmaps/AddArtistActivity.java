@@ -79,5 +79,9 @@ public class AddArtistActivity extends AppCompatActivity {
         finish();
     }
 
+    public void goBack(View view) {
+        finish();
+    }
+
 
 }

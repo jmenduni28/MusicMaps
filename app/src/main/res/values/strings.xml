@@ -33,15 +33,17 @@
     <string name="add_artist__zip">Zip Code</string>
 
     <string name="add_show__name">Name</string>
+    <string name="add_show__artists">Artists Performing (separated by commas)</string>
     <string name="add_show__venue">Venue</string>
     <string name="add_show__website">Website</string>
     <string name="add_show__picture_url">Picture URL</string>
-    <string name="add_show__start"></string>
-    <string name="add_show__end">State</string>
+    <string name="add_show__start">Start Date/Time</string>
+    <string name="add_show__end">End Date/Time</string>
 
 
     <string name="submit_button">Submit</string>
     <string name="clear_button">Clear</string>
+    <string name="go_back_button">Go Back</string>
 
 
 

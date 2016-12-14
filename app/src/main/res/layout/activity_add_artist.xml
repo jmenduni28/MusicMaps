@@ -156,24 +156,6 @@
             android:inputType="number"
             android:layout_alignEnd="@+id/artistTown" />
 
-    <Button
-        android:text="@string/submit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:onClick="addArtist"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/textView11" />
-
-    <Button
-        android:text="@string/clear_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:onClick="clearFields"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/artistZipCode" />
-
     <TextView
         android:textSize="@dimen/field_label_size"
         android:layout_width="wrap_content"
@@ -204,6 +186,34 @@
         android:layout_toEndOf="@+id/button2"
         android:id="@+id/artistMemberCount"
         android:layout_alignStart="@+id/artistState" />
+
+    <Button
+        android:text="@string/clear_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:onClick="clearFields"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/artistMemberCount" />
+
+    <Button
+        android:text="@string/submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:onClick="addArtist"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/button3" />
+
+    <Button
+        android:text="@string/go_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+        android:onClick="goBack"
+        android:layout_alignBaseline="@+id/button"
+        android:layout_alignBottom="@+id/button"
+        android:layout_alignStart="@+id/textView13" />
 
 
 </RelativeLayout>

@@ -268,9 +268,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return genreList;
     }
 
-    public SQLiteDatabase getDB() {
-        return this.getWritableDatabase();
-    }
+
 
 
 }
