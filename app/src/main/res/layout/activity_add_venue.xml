@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.joemenduni.musicmaps.AddShowActivity"
+    tools:context="com.joemenduni.musicmaps.AddVenueActivity"
     tools:background="@android:color/darker_gray">
 
 
@@ -72,15 +72,6 @@
         android:layout_alignParentEnd="true"
         android:inputType="textLongMessage"
         android:id="@+id/venueStreetAddress" />
-
-    <EditText
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/startDateTime"
-        android:layout_below="@+id/textView13"
-        android:layout_alignParentStart="true"
-        android:inputType="datetime"
-        android:layout_width="150dp" />
 
     <TextView
         android:text="@string/add_venue_title"

@@ -58,7 +58,7 @@ public class AddShowActivity extends AppCompatActivity {
         endDateTime.setText("");
     }
 
-    public void addArtist(View view) {
+    public void addShow(View view) {
         String theName = showName.getText().toString();
         String theVenue = venue.getSelectedItem().toString();
         String theWebsite = website.getText().toString();

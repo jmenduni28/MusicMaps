@@ -301,6 +301,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(SHOW_start_datetime, theStartDateTime);
         values.put(SHOW_end_datetime, theEndDateTime);
         currentDB.insert(SHOW_TABLE_NAME, null, values);
+        makeArtistsToShows(showCount, theArtists);
     }
 
     public int findArtistByName(String artistName) {
@@ -330,5 +331,21 @@ public class DBHelper extends SQLiteOpenHelper {
            values.put(ARTISTSHOW_artist_id, artistCount);
            currentDB.insert(ARTIST_SHOW_TABLE_NAME, null, values);
         }
+    }
+
+    public void addVenue(String theName, String theWebsite, String thePictureURL, String theStreetAddress, String theTown, String theState, String theZipCode, double latitude, double longitude) {
+        venueCount ++;
+        ContentValues values = new ContentValues();
+        values.put(VENUE_id, venueCount);
+        values.put(VENUE_name, theName);
+        values.put(VENUE_website, theWebsite);
+        values.put(VENUE_picture_url, thePictureURL);
+        values.put(VENUE_address, theStreetAddress);
+        values.put(VENUE_town, theTown);
+        values.put(VENUE_state, theState);
+        values.put(VENUE_zip_code, theZipCode);
+        values.put(VENUE_latitude, latitude);
+        values.put(VENUE_longitude, longitude);
+        currentDB.insert(VENUE_TABLE_NAME, null, values);
     }
 }
