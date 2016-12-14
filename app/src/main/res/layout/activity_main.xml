@@ -95,7 +95,6 @@
         android:layout_alignEnd="@+id/textView6" />
 
     <Button
-        android:text="Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/footer_button_1"
