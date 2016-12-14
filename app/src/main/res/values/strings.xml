@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MusicMaps</string>
+
+    <string name="title">MusicMaps</string>
+    <string name="tagline">Find Local Shows</string>
+
+    <string name="login_button">Log In</string>
+    <string name="join_button">Create Account</string>
+
+    <string name="settings_button">Settings</string>
+    <string name="logout_button">Logout</string>
+</resources>
