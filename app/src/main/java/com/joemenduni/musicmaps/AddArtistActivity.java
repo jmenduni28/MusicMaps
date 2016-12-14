@@ -1,9 +1,10 @@
 package com.joemenduni.musicmaps;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -46,6 +47,8 @@ public class AddArtistActivity extends AppCompatActivity {
 
     public void setGenres() {
         List<String> list = database.getAllGenres();
+        for (String genre: list) {
+        }
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -54,11 +57,7 @@ public class AddArtistActivity extends AppCompatActivity {
 
     public void clearFields(View view) {
         artistName.setText("");
-        List<String> list = database.getAllGenres();
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        genre.setAdapter(dataAdapter);
+        setGenres();
         numberMembers.setText("");
         website.setText("");
         pictureURL.setText("");
@@ -69,7 +68,7 @@ public class AddArtistActivity extends AppCompatActivity {
 
     public void addArtist(View view) {
         String theName = artistName.getText().toString();
-        String theGenre = genre.getSelectedItem().toString();
+        String theGenre = "";
         int theMembers = Integer.valueOf(numberMembers.getText().toString());
         String theWebsite = website.getText().toString();
         String thePictureURL = pictureURL.getText().toString();
@@ -77,6 +76,7 @@ public class AddArtistActivity extends AppCompatActivity {
         String theState = state.getText().toString();
         String theZipCode = zipCode.getText().toString();
         database.addArtist(theName, theGenre, theMembers, theWebsite, thePictureURL, theTown, theState, theZipCode);
+        finish();
     }
 
 

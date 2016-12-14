@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,9 +18,8 @@ import java.util.Map;
  * Created by joemenduni on 12/13/16.
  */
 
-public class DBHelper extends SQLiteOpenHelper implements Serializable {
+public class DBHelper extends SQLiteOpenHelper {
 
-    private static final long serialVersionUID = 1L;
 
     //TASK 1: DEFINE THE DATABASE AND TABLE
     private static final int DATABASE_VERSION = 1;
@@ -77,7 +77,15 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
     private static boolean created = false;
 
     public DBHelper(Context context) {
+
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        System.out.println("START DB HELPER");
+        currentDB = this.getWritableDatabase();
+        String[] tables = {GENRE_TABLE_NAME, ARTIST_TABLE_NAME, VENUE_TABLE_NAME, SHOW_TABLE_NAME, ARTIST_SHOW_TABLE_NAME};
+        for (String table: tables) {
+            currentDB.execSQL("DROP TABLE IF EXISTS " + table);
+        }
+        createTables();
     }
 
     boolean isCreating = false;
@@ -85,7 +93,7 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        if (created == false) {
+        //if (created == false) {
             String genreTable = "CREATE TABLE " + GENRE_TABLE_NAME + "(" + makeGenreTableSQL() + ")";
             String artistTable = "CREATE TABLE " + ARTIST_TABLE_NAME + "(" + makeArtistTableSQL() + ")";
             String venueTable = "CREATE TABLE " + VENUE_TABLE_NAME + "(" + makeVenueTableSQL() + ")";
@@ -98,17 +106,14 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
             //database.execSQL(artistToshowTable);
             //database.execSQL("CREATE INDEX artist_index ON " + ARTIST_SHOW_TABLE_NAME + " (artist_id);");
             //database.execSQL("CREATE INDEX show_index ON " + ARTIST_SHOW_TABLE_NAME + " (show_id);");
-            makeInitialGenres();
-            created = true;
-            isCreating = true;
-
-        }
-            currentDB = database;
-        //isCreating = false;
-        //currentDB = null;
+        isCreating = true;
+        currentDB = database;
+        makeInitialGenres();
+        isCreating = false;
+        currentDB = null;
     }
 
-    @Override
+   /* @Override
     public SQLiteDatabase getWritableDatabase() {
         // TODO Auto-generated method stub
         if(isCreating && currentDB != null){
@@ -120,8 +125,11 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
     @Override
     public SQLiteDatabase getReadableDatabase() {
         // TODO Auto-generated method stub
+        if(isCreating && currentDB != null){
+            return currentDB;
+        }
         return super.getReadableDatabase();
-    }
+    }*/
 
     @Override
     public void onUpgrade(SQLiteDatabase database,
@@ -132,6 +140,23 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
             database.execSQL("DROP TABLE IF EXISTS " + table);
         }
         onCreate(database);
+    }
+
+    private void createTables() {
+        currentDB = this.getWritableDatabase();
+        String genreTable = "CREATE TABLE " + GENRE_TABLE_NAME + "(" + makeGenreTableSQL() + ")";
+        String artistTable = "CREATE TABLE " + ARTIST_TABLE_NAME + "(" + makeArtistTableSQL() + ")";
+        String venueTable = "CREATE TABLE " + VENUE_TABLE_NAME + "(" + makeVenueTableSQL() + ")";
+        String showTable = "CREATE TABLE " + SHOW_TABLE_NAME + "(" + makeShowTableSQL() + ")";
+        String artistToshowTable = "CREATE TABLE " + ARTIST_SHOW_TABLE_NAME + "(" + makeArtistShowTableSQL() + ")";
+        currentDB.execSQL(genreTable);
+        currentDB.execSQL(artistTable);
+        currentDB.execSQL(venueTable);
+        //database.execSQL(showTable);
+        //database.execSQL(artistToshowTable);
+        //database.execSQL("CREATE INDEX artist_index ON " + ARTIST_SHOW_TABLE_NAME + " (artist_id);");
+        //database.execSQL("CREATE INDEX show_index ON " + ARTIST_SHOW_TABLE_NAME + " (show_id);");
+        makeInitialGenres();
     }
 
     private String makeGenreTableSQL() {
@@ -213,30 +238,30 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
     }
 
     private void makeInitialGenres() {
+        System.out.println("MAKE INITIAL");
         String[] genres = {"Rock 'n Roll", "Pop", "Heavy Metal", "Rap", "Country", "Punk", "R & B", "Jazz", "Classical", "Alternative", "Hip Hop", "Soul", "Reggae", "Techno", "Grunge", "EDM", "Hard Rock", "Blues"};
-        SQLiteDatabase db = this.getWritableDatabase();
         for (String genre: genres) {
             genreCount ++;
             ContentValues values = new ContentValues();
             values.put(GENRE_ID, genreCount);
             values.put(GENRE_NAME, genre);
-            db.insert(GENRE_TABLE_NAME, null, values);
+            this.getWritableDatabase().insert(GENRE_TABLE_NAME, null, values);
         }
-        db.close();
     }
 
     public void addArtist(String theName, String theGenre, int theMembers, String theWebsite, String thePictureURL, String theTown, String theState, String theZipCode) {
         ContentValues values = new ContentValues();
         values.put(ARTIST_id, artistCount);
+        currentDB.insert(ARTIST_TABLE_NAME, null, values);
     }
 
     public List<String> getAllGenres() {
         List<String> genreList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + GENRE_TABLE_NAME + ";";
-        Cursor cursor = currentDB.rawQuery(selectQuery, null);
+        Cursor cursor = this.getReadableDatabase().rawQuery(selectQuery, null);
         if ((cursor.moveToFirst())) {
             do {
-                genreList.add(cursor.getString(1));
+                genreList.add(cursor.getString(0));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -244,7 +269,7 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
     }
 
     public SQLiteDatabase getDB() {
-        return currentDB;
+        return this.getWritableDatabase();
     }
 
 
