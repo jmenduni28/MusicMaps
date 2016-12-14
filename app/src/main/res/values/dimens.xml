@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="title_size">40sp</dimen>
+    <dimen name="title_size">42sp</dimen>
     <dimen name="tagline_size">20sp</dimen>
 
     <dimen name="footer_button_text_size">18sp</dimen>

@@ -2,11 +2,24 @@
     <string name="app_name">MusicMaps</string>
 
     <string name="title">MusicMaps</string>
+    <string name="title_fontfamily">sans-serif-smallcaps</string>
     <string name="tagline">Find Local Shows</string>
+    <string name="tagline_fontfamily">casual</string>
 
-    <string name="login_button">Log In</string>
-    <string name="join_button">Create Account</string>
+    <string name="view_shows">View Events Near You</string>
+    <string name="map_button">Map</string>
+    <string name="search_button">Search</string>
+
+
+    <string name="cant_find">Don't See A Show or A Venue?</string>
+    <string name="add_show_button">Add A Show</string>
+    <string name="add_venue_button">Add A Venue</string>
 
     <string name="settings_button">Settings</string>
-    <string name="logout_button">Logout</string>
+    <string name="about_button">About</string>
+
+
+
+
+
 </resources>
