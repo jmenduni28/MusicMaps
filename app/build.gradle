@@ -26,5 +26,4 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
-    compile files('src/main/java/com/joemenduni/musicmaps/sqlite-jdbc-3.8.11.2.jar')
 }

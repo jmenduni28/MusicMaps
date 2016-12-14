@@ -37,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(aboutIntent);
     }
 
-    /*public void gotoSettings(View view) {
+    public void gotoSettings(View view) {
         Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(settingsIntent);
-    }*/
+    }
 
 
 
