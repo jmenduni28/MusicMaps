@@ -66,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(settingsIntent);
     }
 
+    public void gotoMap(View view) {
+        Intent mapIntent = new Intent(getApplicationContext(), MapActivity.class);
+        startActivity(mapIntent);
+    }
+
+
+
 
 
 }

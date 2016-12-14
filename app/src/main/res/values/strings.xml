@@ -69,8 +69,7 @@
 
     <string name="Yes">Yes</string>
     <string name="No">No</string>
-
-
+    <string name="title_activity_map">Map</string>
 
 
 </resources>
