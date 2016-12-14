@@ -13,13 +13,14 @@ import java.util.List;
 
 public class AddVenueActivity extends AppCompatActivity {
 
-    EditText venueName;
-    EditText website;
-    EditText pictureURL;
-    EditText streetAddress;
-    EditText town;
-    EditText state;
-    EditText zipCode;
+    private EditText venueName;
+    private EditText website;
+    private EditText pictureURL;
+    private EditText streetAddress;
+    private EditText town;
+    private EditText state;
+    private EditText zipCode;
+
     DBHelper database;
 
     double latitude = 0;

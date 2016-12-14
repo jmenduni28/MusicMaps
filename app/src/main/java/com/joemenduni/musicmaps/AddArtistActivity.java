@@ -14,14 +14,14 @@ import java.util.List;
 
 public class AddArtistActivity extends AppCompatActivity {
 
-    EditText artistName;
-    Spinner genre;
-    EditText numberMembers;
-    EditText website;
-    EditText pictureURL;
-    EditText town;
-    EditText state;
-    EditText zipCode;
+    private EditText artistName;
+    private Spinner genre;
+    private EditText numberMembers;
+    private EditText website;
+    private EditText pictureURL;
+    private EditText town;
+    private EditText state;
+    private EditText zipCode;
 
     DBHelper database;
 

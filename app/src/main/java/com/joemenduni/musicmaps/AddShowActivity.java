@@ -11,13 +11,13 @@ import java.util.List;
 
 public class AddShowActivity extends AppCompatActivity {
 
-    EditText showName;
-    Spinner venue;
-    EditText website;
-    EditText pictureURL;
-    EditText artistsPerforming;
-    EditText startDateTime;
-    EditText endDateTime;
+    private EditText showName;
+    private Spinner venue;
+    private EditText website;
+    private EditText pictureURL;
+    private EditText artistsPerforming;
+    private EditText startDateTime;
+    private EditText endDateTime;
 
     DBHelper database;
 
