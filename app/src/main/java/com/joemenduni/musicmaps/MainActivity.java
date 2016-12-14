@@ -70,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(mapIntent);
     }
 
+    public void gotoSearch(View view) {
+        Intent searchIntent = new Intent(getApplicationContext(), SearchActivity.class);
+        startActivity(searchIntent);
+    }
+
 
 
 

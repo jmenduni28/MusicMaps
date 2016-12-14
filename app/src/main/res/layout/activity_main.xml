@@ -70,7 +70,8 @@
         android:layout_alignBaseline="@+id/mapButton"
         android:layout_alignBottom="@+id/mapButton"
         android:layout_alignEnd="@+id/footer_button_2"
-        android:elevation="0dp" />
+        android:elevation="0dp"
+        android:onClick="gotoSearch" />
 
     <TextView
         android:text="@string/view_shows"
