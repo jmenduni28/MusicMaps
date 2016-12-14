@@ -60,5 +60,17 @@
 
     <string name="about_activity_string_3">MusicMaps is developed by Joe Menduni for his Comp 39000 Mobile Development final project.  The data is the app is likely made up.</string>
 
+    <string name="settings_name">Your Name</string>
+    <string name="settings_musician">Are You A Musician?</string>
+    <string name="settings_location">Use My Location</string>
+    <string name="settings_range">How far away from your current location should be displayed (miles)?</string>
+    <string name="settings_zipcode">Enter a default zip code:</string>
+    <string name="settings_zipcode_prompt">Or leave blank if you want the default location to always be your current location</string>
+
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+
+
+
 
 </resources>

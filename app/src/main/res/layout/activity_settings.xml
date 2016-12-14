@@ -1,13 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_settings"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.joemenduni.musicmaps.SettingsActivity">
+    tools:context="com.joemenduni.musicmaps.SettingsActivity"
+    android:background="@drawable/show_background">
+
+    <TextView
+        android:text="@string/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_text"
+        android:textColor="@color/colorTitle"
+        android:textSize="@dimen/title_size"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@string/title_fontfamily"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="@string/tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tagline_text"
+        android:textSize="@dimen/tagline_size"
+        android:layout_below="@+id/title_text"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorTagLine"
+        android:fontFamily="@string/tagline_fontfamily"
+        android:textStyle="normal|bold"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:text="@string/settings_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView19"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@+id/tagline_text"
+        android:layout_alignParentStart="true"
+        android:textSize="@dimen/settings_text_size" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/textView19"
+        android:layout_alignEnd="@+id/button4"
+        android:id="@+id/userName" />
+
+    <RadioButton
+        android:text="@string/Yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/settings_musician_yes"
+        android:textSize="@dimen/settings_radio_button_size"
+        android:layout_below="@+id/textView16"
+        android:layout_alignParentStart="true" />
+
+    <RadioButton
+        android:text="@string/No"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/settings_musician_no"
+        android:textSize="@dimen/settings_radio_button_size"
+        android:layout_below="@+id/textView16"
+        android:layout_toEndOf="@+id/settings_musician_yes"
+        android:layout_marginStart="9dp" />
+
+    <RadioButton
+        android:text="@string/Yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/settings_location_yes"
+        android:textSize="@dimen/settings_radio_button_size"
+        android:layout_below="@+id/textView16"
+        android:layout_alignEnd="@+id/userName"
+        android:layout_marginEnd="8dp" />
+
+    <RadioButton
+        android:text="@string/No"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioButton5"
+        android:textSize="@dimen/settings_radio_button_size"
+        android:layout_alignBaseline="@+id/settings_location_yes"
+        android:layout_alignBottom="@+id/settings_location_yes"
+        android:layout_toEndOf="@+id/userName" />
+
+    <TextView
+        android:text="@string/settings_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView20"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/settings_text_size"
+        android:layout_above="@+id/settings_location_yes"
+        android:layout_toEndOf="@+id/settings_musician_no"
+        android:layout_marginStart="14dp"
+        android:layout_marginBottom="7dp" />
+
+    <TextView
+        android:text="@string/settings_musician"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView16"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/settings_text_size"
+        android:layout_below="@+id/textView19"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="35dp"
+        android:layout_alignEnd="@+id/settings_musician_no" />
+
+    <SeekBar
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:id="@+id/seekBar"
+        android:layout_width="250dp"
+        android:layout_below="@+id/textView21"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="@string/settings_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView21"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        android:layout_below="@+id/settings_musician_yes"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView22"
+        android:textSize="25sp"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/textView21"
+        android:layout_toStartOf="@+id/seekBar" />
+
+    <TextView
+        android:text="100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView23"
+        android:textSize="25sp"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/textView21"
+        android:layout_toEndOf="@+id/radioButton5" />
+
+    <TextView
+        android:text="@string/settings_zipcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView24"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        android:layout_below="@+id/textView22"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="9dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:layout_below="@+id/textView23"
+        android:id="@+id/defaultZipCode"
+        android:layout_toEndOf="@+id/settings_location_yes" />
+
+    <TextView
+        android:text="@string/settings_zipcode_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView25"
+        android:layout_below="@+id/textView24"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/go_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button4"
+        android:textSize="24sp"
+        android:onClick="goBack"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="57dp" />
+
 
 </RelativeLayout>

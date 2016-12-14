@@ -9,4 +9,7 @@
     <dimen name="field_label_size">18sp</dimen>
 
     <dimen name="footer_button_text_size">18sp</dimen>
+
+    <dimen name="settings_text_size">22sp</dimen>
+    <dimen name="settings_radio_button_size">18sp</dimen>
 </resources>
