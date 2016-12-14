@@ -33,6 +33,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String ARTIST_members = "members";
     private static final String ARTIST_website = "website";
     private static final String ARTIST_picture_url = "picture_url";
+    private static final String ARTIST_town = "town";
+    private static final String ARTIST_state = "state";
     private static final String ARTIST_zip_code = "zip_code";
 
     private static final String VENUE_id = "_id";
@@ -113,6 +115,8 @@ public class DBHelper extends SQLiteOpenHelper {
         artistDBMap.put(ARTIST_members, "INTEGER");
         artistDBMap.put(ARTIST_website, "TEXT");
         artistDBMap.put(ARTIST_picture_url, "TEXT");
+        artistDBMap.put(ARTIST_town, "TEXT");
+        artistDBMap.put(ARTIST_state, "TEXT");
         artistDBMap.put(ARTIST_zip_code, "INTEGER");
         artistDBMap.put("FOREIGN KEY (" + ARTIST_genre_id + ")", "REFERENCES " + GENRE_TABLE_NAME + "(" + GENRE_ID + ")");
         return makeDBStringFromMap(artistDBMap);
@@ -142,6 +146,7 @@ public class DBHelper extends SQLiteOpenHelper {
         showDBMap.put(SHOW_venue_id, "INTEGER");
         showDBMap.put(SHOW_start_datetime, "INTEGER");
         showDBMap.put(SHOW_end_datetime, "INTEGER");
+        showDBMap.put(SHOW_attendance, "INTEGER");
         showDBMap.put("FOREIGN KEY (" + SHOW_venue_id + ")", "REFERENCES " + VENUE_TABLE_NAME + "(" + VENUE_id + ")");
         return makeDBStringFromMap(showDBMap);
     }
@@ -185,7 +190,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         }
         db.close();
-
     }
 
 

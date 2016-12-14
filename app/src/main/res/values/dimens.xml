@@ -5,6 +5,8 @@
 
     <dimen name="title_size">42sp</dimen>
     <dimen name="tagline_size">20sp</dimen>
+    <dimen name="page_title_size">35sp</dimen>
+    <dimen name="field_label_size">18sp</dimen>
 
     <dimen name="footer_button_text_size">18sp</dimen>
 </resources>

@@ -18,7 +18,21 @@
     <string name="settings_button">Settings</string>
     <string name="about_button">About</string>
 
+    <string name="add_artist_title">Add An Artist</string>
+    <string name="add_show_title">Add A Show</string>
+    <string name="add_venue_title">Add A Venue</string>
 
+    <string name="add_artist__name">Name</string>
+    <string name="add_artist__genre">Genre</string>
+    <string name="add_artist__members">Number of Members</string>
+    <string name="add_artist__website">Website</string>
+    <string name="add_artist__picture_url">Picture URL</string>
+    <string name="add_artist__town">Town</string>
+    <string name="add_artist__state">State</string>
+    <string name="add_artist__zip">Zip Code</string>
+
+    <string name="submit_button">Submit</string>
+    <string name="clear_button">Clear</string>
 
 
 
