@@ -66,8 +66,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 System.out.println(cursor.getInt(0));
                 double[] latlng = database.findVenueLatLngByID(cursor.getInt(0));
                 System.out.println(latlng[0]);
-                Double latitude = latlng[0] + .0000000001;
-                Double longitude = latlng[1] + .0000000001;
+                Double latitude = latlng[0] + .00001;
+                Double longitude = latlng[1] + .00001;
                 latLng = new LatLng(latitude, longitude);
                 mMap.addMarker(new MarkerOptions().position(latLng).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             } while (cursor.moveToNext());

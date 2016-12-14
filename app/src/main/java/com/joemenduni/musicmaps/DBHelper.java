@@ -271,7 +271,7 @@ public class DBHelper extends SQLiteOpenHelper {
             showCount ++;
             String[] lineSplit = venue.split(",");
             ContentValues values = new ContentValues();
-            values.put(SHOW_id, venueCount);
+            values.put(SHOW_id, showCount);
             values.put(SHOW_name,lineSplit[0]);
             values.put(SHOW_website, lineSplit[1]);
             values.put(SHOW_venue_id, Integer.valueOf(lineSplit[2]));
