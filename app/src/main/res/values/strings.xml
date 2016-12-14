@@ -11,7 +11,7 @@
     <string name="search_button">Search</string>
 
 
-    <string name="cant_find">Don\'t See A Show or A Venue?</string>
+    <string name="cant_find">Don\'t See An Artist, Show or Venue?</string>
     <string name="add_artist_button">Add Artist</string>
     <string name="add_show_button">Add Show</string>
     <string name="add_venue_button">Add Venue</string>
@@ -52,6 +52,13 @@
     <string name="clear_button">Clear</string>
     <string name="go_back_button">Go Back</string>
 
+    <string name="about_activity_string_1">MusicMaps is an Android application for anyone who wants to find a concert by location. Whether a concert at an area that seats 25,000 people
+    or a concert for small band at a restaurant, MusicMaps is right for you.  Use a map to find venues around you and the show happening at them, or search by putting in parameters.</string>
+
+    <string name="about_activity_string_2">All of the artists, shows, and venues, with the exception of those posts that are in gold, are put in by other uses and are dependent on the
+    accuracy of those users.  MusicMaps does not take any resonsibility for incorrect or misleading data that is displayed through our app.</string>
+
+    <string name="about_activity_string_3">MusicMaps is developed by Joe Menduni for his Comp 39000 Mobile Development final project.  The data is the app is likely made up.</string>
 
 
 </resources>

@@ -23,6 +23,25 @@ public class MainActivity extends AppCompatActivity {
         startActivity(addArtistIntent);
     }
 
+    public void gotoAddShow(View view) {
+        Intent addShowIntent = new Intent(getApplicationContext(), AddShowActivity.class);
+        startActivity(addShowIntent);
+    }
+    public void gotoAddVenue(View view) {
+        Intent addVenueIntent = new Intent(getApplicationContext(), AddVenueActivity.class);
+        startActivity(addVenueIntent);
+    }
+
+    public void gotoAbout(View view) {
+        Intent aboutIntent = new Intent(getApplicationContext(), AboutActivity.class);
+        startActivity(aboutIntent);
+    }
+
+    /*public void gotoSettings(View view) {
+        Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(settingsIntent);
+    }*/
+
 
 
 }
