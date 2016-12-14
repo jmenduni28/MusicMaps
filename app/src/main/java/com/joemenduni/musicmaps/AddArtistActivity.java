@@ -47,8 +47,6 @@ public class AddArtistActivity extends AppCompatActivity {
 
     public void setGenres() {
         List<String> list = database.getAllGenres();
-        for (String genre: list) {
-        }
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -68,7 +66,7 @@ public class AddArtistActivity extends AppCompatActivity {
 
     public void addArtist(View view) {
         String theName = artistName.getText().toString();
-        String theGenre = "";
+        String theGenre = genre.getSelectedItem().toString();
         int theMembers = Integer.valueOf(numberMembers.getText().toString());
         String theWebsite = website.getText().toString();
         String thePictureURL = pictureURL.getText().toString();

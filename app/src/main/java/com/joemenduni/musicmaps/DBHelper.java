@@ -223,7 +223,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private String makeDBStringFromMap(Map<String, String> dbMap) {
         String returnString = "";
         Iterator iterator = dbMap.entrySet().iterator();
-        int count = 0;
         while (iterator.hasNext()) {
             Map.Entry pair = (Map.Entry)iterator.next();
             if (iterator.hasNext()) {
@@ -249,12 +248,6 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void addArtist(String theName, String theGenre, int theMembers, String theWebsite, String thePictureURL, String theTown, String theState, String theZipCode) {
-        ContentValues values = new ContentValues();
-        values.put(ARTIST_id, artistCount);
-        currentDB.insert(ARTIST_TABLE_NAME, null, values);
-    }
-
     public List<String> getAllGenres() {
         List<String> genreList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + GENRE_TABLE_NAME + ";";
@@ -268,7 +261,74 @@ public class DBHelper extends SQLiteOpenHelper {
         return genreList;
     }
 
+    public Map<Integer, String> getAllArtists() {
+        Map<Integer, String> artistMap = new HashMap<Integer, String>();
+        String selectQuery = "SELECT * FROM " + ARTIST_TABLE_NAME + ";";
+        Cursor cursor = this.getReadableDatabase().rawQuery(selectQuery, null);
+        if ((cursor.moveToFirst())) {
+            do {
+                artistMap.put(cursor.getInt(0), cursor.getString(1));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return artistMap;
+    }
 
 
+    public void addArtist(String theName, String theGenre, int theMembers, String theWebsite, String thePictureURL, String theTown, String theState, String theZipCode) {
+        artistCount ++;
+        ContentValues values = new ContentValues();
+        values.put(ARTIST_id, artistCount);
+        values.put(ARTIST_name, theName);
+        values.put(ARTIST_genre_id, theGenre);
+        values.put(ARTIST_members, theMembers);
+        values.put(ARTIST_website, theWebsite);
+        values.put(ARTIST_picture_url, thePictureURL);
+        values.put(ARTIST_town, theTown);
+        values.put(ARTIST_state, theState);
+        values.put(ARTIST_zip_code, theZipCode);
+        currentDB.insert(ARTIST_TABLE_NAME, null, values);
+    }
 
+    public void addShow(String theName, String theVenue, String theWebsite, String thePictureURL, String[] theArtists, String theStartDateTime, String theEndDateTime) {
+        showCount ++;
+        ContentValues values = new ContentValues();
+        values.put(SHOW_id, showCount);
+        values.put(SHOW_name, theName);
+        values.put(SHOW_venue_id, theVenue);
+        values.put(SHOW_website, theWebsite);
+        values.put(SHOW_picture_url, thePictureURL);
+        values.put(SHOW_start_datetime, theStartDateTime);
+        values.put(SHOW_end_datetime, theEndDateTime);
+        currentDB.insert(SHOW_TABLE_NAME, null, values);
+    }
+
+    public int findArtistByName(String artistName) {
+        Map<Integer, String> artistMap = getAllArtists();
+        Iterator it = artistMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if (artistName.equals(pair.getValue())) {
+                return (int) pair.getKey();
+            }
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        return -1;
+    }
+
+    private void makeArtistsToShows(int show_id, String[] artists) {
+       for (String artistName: artists) {
+           artistShowCount ++;
+           ContentValues values = new ContentValues();
+           values.put(ARTISTSHOW_id, artistShowCount);
+           values.put(ARTISTSHOW_show_id, show_id);
+           int artistID = findArtistByName(artistName);
+           if (findArtistByName(artistName) == -1) {
+               artistCount ++;
+               addArtist(artistName, null, -1, null, null, null, null, null);
+           }
+           values.put(ARTISTSHOW_artist_id, artistCount);
+           currentDB.insert(ARTIST_SHOW_TABLE_NAME, null, values);
+        }
+    }
 }
