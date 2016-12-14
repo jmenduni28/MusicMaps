@@ -257,16 +257,16 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private void makeInitialShows() {
-        String[] venues = {"Grassroots 2016,http://www.grassrootsfest.org/festival/,5",
-                            "Grassroots 2015,http://www.grassrootsfest.org/festival/,5",
-                            "Ithaca Festival 2016,http://www.grassrootsfest.org/festival/,6",
-                            "Ithaca AppleFest 2016,http://www.downtownithaca.com/ithaca-events/Apple%20Harvest%20Festival%20Presented%20by%20Tompkins%20Trust,6",
-                            "John Brown's Body,http://dansmallspresents.com/john-browns-body,4",
-                            "The Blind Spots: Willy Wonka and The Chocolate Factory,http://dansmallspresents.com/the-blind-spots-willy-wonka-and-the-chocolate-factory,2",
-                            "Driftwood,http://dansmallspresents.com/driftwood,2",
-                            "Jimkata,http://dansmallspresents.com/jimkata,1",
-                            "Big Mean Sound Machine,http://dansmallspresents.com/big-mean-sound-machine,1",
-                            "Ben Harper & The Innocent Criminals,http://dansmallspresents.com/ben-harper-the-innocent-criminals,3"};
+        String[] venues = {"Grassroots 2016,http://www.grassrootsfest.org/festival/,13",
+                            "Grassroots 2015,http://www.grassrootsfest.org/festival/,13",
+                            "Ithaca Festival 2016,http://www.grassrootsfest.org/festival/,14",
+                            "Ithaca AppleFest 2016,http://www.downtownithaca.com/ithaca-events/Apple%20Harvest%20Festival%20Presented%20by%20Tompkins%20Trust,14",
+                            "John Brown's Body,http://dansmallspresents.com/john-browns-body,11",
+                            "The Blind Spots: Willy Wonka and The Chocolate Factory,http://dansmallspresents.com/the-blind-spots-willy-wonka-and-the-chocolate-factory,9",
+                            "Driftwood,http://dansmallspresents.com/driftwood,9",
+                            "Jimkata,http://dansmallspresents.com/jimkata,8",
+                            "Big Mean Sound Machine,http://dansmallspresents.com/big-mean-sound-machine,8",
+                            "Ben Harper & The Innocent Criminals,http://dansmallspresents.com/ben-harper-the-innocent-criminals,10"};
         for (String venue: venues) {
             showCount ++;
             String[] lineSplit = venue.split(",");
@@ -340,6 +340,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getAllShowsCursors() {
         String selectQuery = "SELECT * FROM " + SHOW_TABLE_NAME + ";";
         Cursor cursor = this.getReadableDatabase().rawQuery(selectQuery, null);
+        System.out.println(cursor.getCount() + " IS CURSOR COUNT");
         return cursor;
     }
 
@@ -399,13 +400,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return -1;
     }
 
-    public double[] findVenueLatLngByName(String venueName) {
+    public double[] findVenueLatLngByID(int venueID) {
         Map<Integer, String> venueMap = new HashMap<Integer, String>();
         String selectQuery = "SELECT * FROM " + VENUE_TABLE_NAME + ";";
         Cursor cursor = this.getReadableDatabase().rawQuery(selectQuery, null);
         if ((cursor.moveToFirst())) {
             do {
-                if (venueName.equals(cursor.getString(6))) {
+                System.out.println("TEST " + venueID + " " + cursor.getInt(9));
+                if (venueID == cursor.getInt(9)) {
+                    System.out.println("MATCH " + venueID + " " + cursor.getInt(9));
                     return new double[]{cursor.getDouble(5), cursor.getDouble(2)};
                 }
             } while (cursor.moveToNext());
