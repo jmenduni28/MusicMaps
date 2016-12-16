@@ -1,7 +1,17 @@
+/*************************************************************************************************
+ * File:   SettingsActivity.java
+ * Author: Joe Menduni
+ *
+ * Created on December 5, 2016
+ * Last Modified on December 14, 2016
+ *
+ * Purpose: This activity creates and inflates the Settings Activity, which contains a
+ *              form fields that set the user's preferences.
+ ************************************************************************************************/
+
 package com.joemenduni.musicmaps;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +23,7 @@ import android.widget.SeekBar;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    /** form fields **/
     private EditText userName;
     private RadioButton musicianYes;
     private RadioButton musicianNo;
@@ -23,6 +34,14 @@ public class SettingsActivity extends AppCompatActivity {
     /** user preferences **/
     private SharedPreferences settings;
 
+    /*************************************************************************************************
+     * Description: This function creates and inflates the Settings activity and layout.
+     *
+     * Inputs:
+     *    @param savedInstanceState - previously saved state of application and data
+     *
+     * Last Modified: 12/14/16
+     *************************************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +69,21 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        // sets listeners for radio buttons
         musicianYes.setOnClickListener(radio_listener_musician);
         musicianNo.setOnClickListener(radio_listener_musician);
         locationYes.setOnClickListener(radio_listener_location);
         locationNo.setOnClickListener(radio_listener_location);
 
+        // sets listener for seekbar
         range.setOnSeekBarChangeListener(seekbar_listener);
     }
 
+    /*************************************************************************************************
+     * Description: This function sets pointers to the views in the display.
+     *
+     * Last Modified: 12/14/16
+     *************************************************************************************************/
     public void setViewPointers() {
         userName = (EditText) findViewById(R.id.userName);
         musicianYes = (RadioButton) findViewById(R.id.settings_musician_yes);
@@ -67,15 +93,30 @@ public class SettingsActivity extends AppCompatActivity {
         range = (SeekBar) findViewById(R.id.seekBar);
     }
 
+    /*************************************************************************************************
+     * Description: This function exits this activity and goes back to the Main Activity.
+     *
+     * Inputs: pressed to run the function
+     *    @param view - the button that is clicked to run the function
+     *
+     * Last Modified: 12/14/16
+     *************************************************************************************************/
     public void goBack(View view) {
         finish();
     }
 
+    /*************************************************************************************************
+     * Description: This function loads the user's preferences from Android SharedPreferneces.
+     *
+     * Last Modified: 12/14/16
+     *************************************************************************************************/
     public void loadUserPreferences() {
+        // if settings contains user's name
         if (settings.contains("name")) {
             String name = settings.getString("name", null);
             userName.setText(name);
         }
+        // if settings contain a musician
         if (settings.contains("musician")) {
             Boolean musician = settings.getBoolean("musician", true);
             if (musician) {
@@ -94,6 +135,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         }
+        // if settings contain a user's location prefernece
         if (settings.contains("location")) {
             Boolean location = settings.getBoolean("location", true);
             if (location) {
@@ -112,42 +154,72 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         }
+        // if settings contains milage range
         if (settings.contains("range")) {
             int rangeDisplay = settings.getInt("range", 0);
             range.setProgress(rangeDisplay);
         }
     }
 
+    /*************************************************************************************************
+     * Description: This function runs on the change of the EditText and puts it into preferences.
+     *
+     * Last Modified: 12/14/16
+     *************************************************************************************************/
     private void handleNameChange() {
         settings.edit().putString("name", userName.getText().toString()).apply();
     }
 
+    /*************************************************************************************************
+     * Description: This listener listens for a click of the radio button and changes the
+     *              musician's setting in the user preferences.
+     *
+     * Last Modified: 12/14/16
+     *************************************************************************************************/
     View.OnClickListener radio_listener_musician = new View.OnClickListener(){
         public void onClick(View v) {
-            boolean isMusican = false;
+            boolean isMusician = false;
+            // if the yes button was selected
             if (v == musicianYes) {
-                isMusican = true;
+                isMusician = true;
             }
+            // if the no button was selected
             else if (v == musicianNo) {
-                isMusican = false;
+                isMusician = false;
             }
-            settings.edit().putBoolean("musician", isMusican).apply();
+            // add musician to user preferences
+            settings.edit().putBoolean("musician", isMusician).apply();
         }
     };
 
+    /*************************************************************************************************
+     * Description: This listener listens for a click of the radio button and changes the
+     *              location's setting in the user preferences.
+     *
+     * Last Modified: 12/14/16
+     *************************************************************************************************/
     View.OnClickListener radio_listener_location = new View.OnClickListener(){
         public void onClick(View v) {
             boolean useLocation = false;
+            // if the yes button was selected
             if (v == locationYes) {
                 useLocation = true;
             }
+            // if the no button was selected
             else if (v == locationNo) {
                 useLocation = false;
             }
+            // add location to user preferences
             settings.edit().putBoolean("location", useLocation).apply();
         }
     };
 
+    /*************************************************************************************************
+     * Description: This listener listens for a change in hte seekbar and changes the
+     *              range's setting in the user preferences.
+     *
+     * Last Modified: 12/14/16
+     *************************************************************************************************/
     SeekBar.OnSeekBarChangeListener seekbar_listener = new SeekBar.OnSeekBarChangeListener() {
 
         public void onStartTrackingTouch(SeekBar seekBar) {};
