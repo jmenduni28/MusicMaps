@@ -236,18 +236,19 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private void makeInitialVenues() {
-        String[] venues = {"Hangar Theatre,http://www.hangartheatre.org/,42.4553429,-76.51731889999999,",
-                            "The Haunt,http://www.thehaunt.com/,42.4514511,-76.5051489",
-                            "The Dock,http://thedockithaca.com/,42.4519932,-76.5133232",
-                            "Lot 10,http://www.lot-10.com/,42.4391302,-76.4992535",
-                            "State Theatre of Ithaca,http://www.stateofithaca.com/,42.4392627,-76.49960229999999",
-                             "Trumansburg Fairground,http://www.tburgevents.com/venue/trumansburg-fair-grounds/,42.5360253,-76.6466288",
-                             "Bernie Milton Pavilion,http://ithacafestival.org/,42.4393319,-76.49696639999999"};
+        String[] venues = {"Hangar Theatre,http://www.hangartheatre.org/,42.4553429,-76.51731889999999,1",
+                            "The Haunt,http://www.thehaunt.com/,42.4514511,-76.5051489,2",
+                            "The Dock,http://thedockithaca.com/,42.4519932,-76.5133232,3",
+                            "Lot 10,http://www.lot-10.com/,42.4391302,-76.4992535,4",
+                            "State Theatre of Ithaca,http://www.stateofithaca.com/,42.4392627,-76.49960229999999,5",
+                             "Trumansburg Fairground,http://www.tburgevents.com/venue/trumansburg-fair-grounds/,42.5360253,-76.6466288,6",
+                             "Bernie Milton Pavilion,http://ithacafestival.org/,42.4393319,-76.49696639999999,7",
+                            "Ithaca College,http://www.ithaca.edu,42.4217,-76.4986,8"};
         for (String venue: venues) {
             venueCount ++;
             String[] lineSplit = venue.split(",");
             ContentValues values = new ContentValues();
-            values.put(VENUE_id, venueCount);
+            values.put(VENUE_id, Integer.valueOf(lineSplit[4]));
             values.put(VENUE_name,lineSplit[0]);
             values.put(VENUE_website, lineSplit[1]);
             values.put(VENUE_latitude, Double.valueOf(lineSplit[2]));
@@ -257,16 +258,16 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private void makeInitialShows() {
-        String[] venues = {"Grassroots 2016,http://www.grassrootsfest.org/festival/,13",
-                            "Grassroots 2015,http://www.grassrootsfest.org/festival/,13",
-                            "Ithaca Festival 2016,http://www.grassrootsfest.org/festival/,14",
-                            "Ithaca AppleFest 2016,http://www.downtownithaca.com/ithaca-events/Apple%20Harvest%20Festival%20Presented%20by%20Tompkins%20Trust,14",
-                            "John Brown's Body,http://dansmallspresents.com/john-browns-body,11",
-                            "The Blind Spots: Willy Wonka and The Chocolate Factory,http://dansmallspresents.com/the-blind-spots-willy-wonka-and-the-chocolate-factory,9",
-                            "Driftwood,http://dansmallspresents.com/driftwood,9",
+        String[] venues = {"Grassroots 2016,http://www.grassrootsfest.org/festival/,1",
+                            "Grassroots 2015,http://www.grassrootsfest.org/festival/,2",
+                            "Ithaca Festival 2016,http://www.grassrootsfest.org/festival/,3",
+                            "Ithaca AppleFest 2016,http://www.downtownithaca.com/ithaca-events/Apple%20Harvest%20Festival%20Presented%20by%20Tompkins%20Trust,4",
+                            "John Brown's Body,http://dansmallspresents.com/john-browns-body,5",
+                            "The Blind Spots: Willy Wonka and The Chocolate Factory,http://dansmallspresents.com/the-blind-spots-willy-wonka-and-the-chocolate-factory,6",
+                            "Driftwood,http://dansmallspresents.com/driftwood,7",
                             "Jimkata,http://dansmallspresents.com/jimkata,8",
-                            "Big Mean Sound Machine,http://dansmallspresents.com/big-mean-sound-machine,8",
-                            "Ben Harper & The Innocent Criminals,http://dansmallspresents.com/ben-harper-the-innocent-criminals,10"};
+                            "Big Mean Sound Machine,http://dansmallspresents.com/big-mean-sound-machine,1",
+                            "Ben Harper & The Innocent Criminals,http://dansmallspresents.com/ben-harper-the-innocent-criminals,2"};
         for (String venue: venues) {
             showCount ++;
             String[] lineSplit = venue.split(",");
@@ -415,6 +416,21 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return new double[] {-1, -1};
+    }
+
+    public String findVenueNameByID(int venueID) {
+        Map<Integer, String> venueMap = new HashMap<Integer, String>();
+        String selectQuery = "SELECT * FROM " + VENUE_TABLE_NAME + ";";
+        Cursor cursor = this.getReadableDatabase().rawQuery(selectQuery, null);
+        if ((cursor.moveToFirst())) {
+            do {
+                if (venueID == cursor.getInt(9)) {
+                    return cursor.getString(6);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return "";
     }
 
     private void makeArtistsToShows(int show_id, String[] artists) {
