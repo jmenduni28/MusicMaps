@@ -1,9 +1,14 @@
+/*************************************************************************************************
+ * File:   MainActivity.java
+ * Author: Joe Menduni
+ *
+ * Created on December 5, 2016
+ * Last Modified on December 14, 2016
+ *
+ * Purpose: This file allows the conversion from a street address to a latitude and longitude.
+ ************************************************************************************************/
+
 package com.joemenduni.musicmaps;
-
-/**
- * Created by joemenduni on 12/14/16.
- */
-
 
 import android.content.Context;
 import android.location.Address;
