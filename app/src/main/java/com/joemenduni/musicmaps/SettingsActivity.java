@@ -215,7 +215,7 @@ public class SettingsActivity extends AppCompatActivity {
     };
 
     /*************************************************************************************************
-     * Description: This listener listens for a change in hte seekbar and changes the
+     * Description: This listener listens for a change in the seekbar and changes the
      *              range's setting in the user preferences.
      *
      * Last Modified: 12/14/16

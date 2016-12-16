@@ -78,9 +78,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button8"
-        android:onClick="addVenue"
         android:layout_centerHorizontal="true"
-        android:layout_alignTop="@+id/button3" />
+        android:layout_alignTop="@+id/button3"
+        android:onClick="displaySearchResults" />
 
     <Button
         android:text="@string/go_back_button"
@@ -148,7 +148,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button9"
-        android:onClick="addVenue"
+        android:onClick="viewMap"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/button" />
 
